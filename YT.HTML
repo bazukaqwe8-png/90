@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIBE UP - For When You're Bored</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#fef9ff;color:#2d1b4e;min-height:100vh}
+header{padding:20px 5%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:800;color:#7c3aed} .logo span{color:#ec4899}
+.mood-row{display:flex;gap:10px;justify-content:center;margin:10px 0 20px;flex-wrap:wrap}
+.mood{font-size:28px;background:white;border:2px solid #e9d5ff;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
+.mood:active{transform:scale(0.9)} .mood.active{border-color:#7c3aed;background:#f5f3ff;transform:scale(1.1)}
+
+.container{max-width:500px;margin:auto;padding:0 20px 100px}
+.card{background:white;border-radius:20px;padding:22px;margin-bottom:18px;box-shadow:0 8px 20px rgba(124,58,237,0.08);border:1px solid #f3e8ff}
+.card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.btn{width:100%;padding:14px;border:none;border-radius:30px;font-weight:700;font-size:15px;cursor:pointer;transition:.2s}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#ec4899);color:white}
+.btn-white{background:#f5f3ff;color:#7c3aed}
+.btn:active{transform:scale(0.97)}
+.chip{display:inline-block;background:#f5f3ff;color:#7c3aed;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600;margin:4px;cursor:pointer}
+#quote{font-size:18px;font-weight:600;line-height:1.4;color:#4c1d95}
+#joke{font-size:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.game-box{height:160px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden}
+.circle{width:50px;height:50px;background:#f59e0b;border-radius:50%;position:absolute}
+.breathe{width:120px;height:120px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:50%;margin:20px auto;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;transition:2s ease-in-out}
+
+.nav{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:#1f1035;display:flex;gap:5px;padding:8px;border-radius:30px;box-shadow:0 10px 30px rgba(0,0,0,0.3);z-index:20}
+.nav button{background:transparent;border:none;color:#a78bfa;padding:10px 18px;border-radius:20px;font-weight:600;cursor:pointer}
+.nav button.active{background:white;color:#1f1035}
+
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">VIBE <span>UP</span> ✨</div>
+<div style="font-size:12px;background:#ecfdf5;color:#065f46;padding:6px 12px;border-radius:20px;font-weight:700">● Safe Space</div>
+</header>
+
+<div style="text-align:center;padding:0 20px">
+<h2 style="font-size:22px">How are you feeling now?</h2>
+<div class="mood-row">
+<div class="mood" onclick="setMood('bored','😒',this)">😒</div>
+<div class="mood" onclick="setMood('sad','😔',this)">😔</div>
+<div class="mood" onclick="setMood('stressed','😤',this)">😤</div>
+<div class="mood" onclick="setMood('lonely','🥺',this)">🥺</div>
+<div class="mood" onclick="setMood('happy','😊',this)">😊</div>
+</div>
+<p id="moodMsg" style="color:#7c3aed;font-weight:600;height:20px"></p>
+</div>
+
+<div class="container">
+<!-- HOME -->
+<div id="tab-home">
+  <div class="card" style="background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none">
+    <h3 style="color:white">💬 Daily Push</h3>
+    <p id="quote">You are not lazy, you are just bored. Let's change that in 2 minutes.</p>
+    <button class="btn" style="background:white;color:#7c3aed;margin-top:15px" onclick="newQuote()">Give me another ✨</button>
+  </div>
+
+  <div class="card">
+    <h3>🎲 I'm Bored - Do This Now!</h3>
+    <p id="boredTask" style="font-size:16px;font-weight:600;margin-bottom:12px">Tap the button below</p>
+    <button class="btn btn-purple" onclick="newTask()">GIVE ME A TASK 🚀</button>
+    <div id="taskChips" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card">
+    <h3>😂 Laugh Box</h3>
+    <p id="joke">Why did the scarecrow win an award? Because he was outstanding in his field!</p>
+    <button class="btn btn-white" style="margin-top:12px" onclick="newJoke()">Make me laugh again 😂</button>
+  </div>
+</div>
+
+<!-- PLAY -->
+<div id="tab-play" class="hidden">
+  <div class="card">
+    <h3>🎯 Pop The Stress - Tap the orange dots!(●'◡'●)☆*: .｡. o(≧▽≦)o .｡.:*☆(*/ω＼*)(^///^)╰(*°▽°*)╯</h3>
+    <p>Score: <b id="gameScore">0</b> | Time: <b id="gameTime">15</b>s</p>
+    <div class="game-box" id="gameBox" onclick="popGame(event)">
+      <p id="gameStartTxt" style="font-weight:700">TAP TO START</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card" onclick="compliment()"><h3>💖</h3><p style="font-weight:700">Hit me with love</p><p id="comp" style="font-size:13px;margin-top:6px">Tap for compliment</p></div>
+    <div class="card" onclick="confetti()"><h3>🎉</h3><p style="font-weight:700">Confetti Blast</p><p style="font-size:13px;margin-top:6px">Feeling low
